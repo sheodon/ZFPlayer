@@ -721,7 +721,14 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
             CGFloat width = ScreenWidth*0.5-20;
             make.width.mas_equalTo(width);
             make.trailing.mas_equalTo(-10);
-            make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
+            
+            if (self.cellPlayOutPoint == ZFPlayerCellPlayOutPointRightBottom) {
+                make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
+            }
+            else {
+                make.top.mas_equalTo(self.tableView.contentInset.top+10);
+            }
+            
             make.height.mas_equalTo(width*320/480).with.priority(750);
         }];
     }else {
@@ -729,7 +736,12 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
             CGFloat width = ScreenWidth*0.5-20;
             make.width.mas_equalTo(width);
             make.trailing.mas_equalTo(-10);
-            make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
+            if (self.cellPlayOutPoint == ZFPlayerCellPlayOutPointRightBottom) {
+                make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
+            }
+            else {
+                make.top.mas_equalTo(self.tableView.contentInset.top+10);
+            }
             make.height.equalTo(self.mas_width).multipliedBy(9.0f/16.0f).with.priority(750);
         }];
     }

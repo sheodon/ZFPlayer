@@ -35,6 +35,12 @@ typedef NS_ENUM(NSInteger, ZFPlayerLayerGravity) {
      ZFPlayerLayerGravityResizeAspectFill  // 等比例填充，直到填充满整个视图区域，其中一个维度的部分区域会被裁剪
 };
 
+
+typedef NS_ENUM(NSInteger, ZFPlayerCellPlayOutPoint) {
+    ZFPlayerCellPlayOutPointRightBottom,    // 超出屏幕 时 播放窗口位置 左下
+    ZFPlayerCellPlayOutPointRightTop,       // 超出屏幕 时 播放窗口位置 右上
+};
+
 @interface ZFPlayerView : UIView
 
 /** 视频URL */
@@ -58,6 +64,9 @@ typedef NS_ENUM(NSInteger, ZFPlayerLayerGravity) {
 @property (nonatomic, copy  ) NSString             *placeholderImageName;
 /** 是否被用户暂停 */
 @property (nonatomic, assign, readonly) BOOL       isPauseByUser;
+
+/** Cell模式的时候超出屏幕，是否在屏幕右上播放 */
+@property (nonatomic, assign) ZFPlayerCellPlayOutPoint cellPlayOutPoint;
 
 /**
  *  自动播放，默认不自动播放
