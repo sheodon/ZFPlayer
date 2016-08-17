@@ -246,6 +246,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
     [self.controlView.startBtn addTarget:self action:@selector(startAction:) forControlEvents:UIControlEventTouchUpInside];
     // cell上播放视频的话，该返回按钮为×
     if (self.isCellVideo) {
+        self.controlView.backBtn.hidden = self.hiddenCloseBtnWhenCellVideo;
         [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_close") forState:UIControlStateNormal];
     }else {
         [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
@@ -722,7 +723,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
             make.width.mas_equalTo(width);
             make.trailing.mas_equalTo(-10);
             
-            if (self.cellPlayOutPoint == ZFPlayerCellPlayOutPointRightBottom) {
+            if (self.cellVideoOutPoint == ZFPlayerCellVideoOutPointRightBottom) {
                 make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
             }
             else {
@@ -736,7 +737,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
             CGFloat width = ScreenWidth*0.5-20;
             make.width.mas_equalTo(width);
             make.trailing.mas_equalTo(-10);
-            if (self.cellPlayOutPoint == ZFPlayerCellPlayOutPointRightBottom) {
+            if (self.cellVideoOutPoint == ZFPlayerCellVideoOutPointRightBottom) {
                 make.bottom.mas_equalTo(-self.tableView.contentInset.bottom-10);
             }
             else {
@@ -925,6 +926,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
         case UIInterfaceOrientationPortraitUpsideDown:{
             self.controlView.fullScreenBtn.selected = YES;
             if (self.isCellVideo) {
+                self.controlView.backBtn.hidden = NO;
                 [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
             }
             // 设置返回按钮的约束
@@ -943,6 +945,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
             if (self.isCellVideo) {
                 // 改为只允许竖屏播放
                 ZFPlayerShared.isAllowLandscape = NO;
+                self.controlView.backBtn.hidden = self.hiddenCloseBtnWhenCellVideo;
                 [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_close") forState:UIControlStateNormal];
                 [self.controlView.backBtn mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.top.mas_equalTo(10);
@@ -987,6 +990,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
         case UIInterfaceOrientationLandscapeRight:{
             self.controlView.fullScreenBtn.selected = YES;
             if (self.isCellVideo) {
+                self.controlView.backBtn.hidden = NO;
                 [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
             }
             [self.controlView.backBtn mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -1006,6 +1010,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
     
     // 在cell上播放视频 && 不允许横屏（此时为竖屏状态,解决自动转屏到横屏，状态栏消失bug）
     if (self.isCellVideo && !ZFPlayerShared.isAllowLandscape) {
+        self.controlView.backBtn.hidden = self.hiddenCloseBtnWhenCellVideo;
         [self.controlView.backBtn setImage:ZFPlayerImage(@"ZFPlayer_close") forState:UIControlStateNormal];
         [self.controlView.backBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(10);

@@ -36,9 +36,9 @@ typedef NS_ENUM(NSInteger, ZFPlayerLayerGravity) {
 };
 
 
-typedef NS_ENUM(NSInteger, ZFPlayerCellPlayOutPoint) {
-    ZFPlayerCellPlayOutPointRightBottom,    // 超出屏幕 时 播放窗口位置 左下
-    ZFPlayerCellPlayOutPointRightTop,       // 超出屏幕 时 播放窗口位置 右上
+typedef NS_ENUM(NSInteger, ZFPlayerCellVideoOutPoint) {
+    ZFPlayerCellVideoOutPointRightBottom,    // 超出屏幕 时 播放窗口位置 左下
+    ZFPlayerCellVideoOutPointRightTop,       // 超出屏幕 时 播放窗口位置 右上
 };
 
 @interface ZFPlayerView : UIView
@@ -64,9 +64,10 @@ typedef NS_ENUM(NSInteger, ZFPlayerCellPlayOutPoint) {
 @property (nonatomic, copy  ) NSString             *placeholderImageName;
 /** 是否被用户暂停 */
 @property (nonatomic, assign, readonly) BOOL       isPauseByUser;
-
 /** Cell模式的时候超出屏幕，是否在屏幕右上播放 */
-@property (nonatomic, assign) ZFPlayerCellPlayOutPoint cellPlayOutPoint;
+@property (nonatomic, assign) ZFPlayerCellVideoOutPoint cellVideoOutPoint;
+/** 默认 NO，在设置视频 URL 之前设置有效 */
+@property (nonatomic, assign) BOOL  hiddenCloseBtnWhenCellVideo;
 
 /**
  *  自动播放，默认不自动播放
