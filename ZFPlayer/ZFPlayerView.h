@@ -30,9 +30,9 @@ typedef void(^ZFDownloadCallBack)(NSString *urlStr);
 
 // playerLayer的填充模式（默认：等比例填充，直到一个维度到达区域边界）
 typedef NS_ENUM(NSInteger, ZFPlayerLayerGravity) {
-     ZFPlayerLayerGravityResize,           // 非均匀模式。两个维度完全填充至整个视图区域
-     ZFPlayerLayerGravityResizeAspect,     // 等比例填充，直到一个维度到达区域边界
-     ZFPlayerLayerGravityResizeAspectFill  // 等比例填充，直到填充满整个视图区域，其中一个维度的部分区域会被裁剪
+    ZFPlayerLayerGravityResize,           // 非均匀模式。两个维度完全填充至整个视图区域
+    ZFPlayerLayerGravityResizeAspect,     // 等比例填充，直到一个维度到达区域边界
+    ZFPlayerLayerGravityResizeAspectFill  // 等比例填充，直到填充满整个视图区域，其中一个维度的部分区域会被裁剪
 };
 
 
@@ -64,10 +64,15 @@ typedef NS_ENUM(NSInteger, ZFPlayerCellVideoOutPoint) {
 @property (nonatomic, copy  ) NSString             *placeholderImageName;
 /** 是否被用户暂停 */
 @property (nonatomic, assign, readonly) BOOL       isPauseByUser;
+
+#pragma mark CellVideo
 /** Cell模式的时候超出屏幕，是否在屏幕右上播放 */
 @property (nonatomic, assign) ZFPlayerCellVideoOutPoint cellVideoOutPoint;
 /** 默认 NO，在设置视频 URL 之前设置有效 */
 @property (nonatomic, assign) BOOL  hiddenCloseBtnWhenCellVideo;
+/** 默认 NO，Cell模式的时候超出屏幕，是否自动移除 */
+@property (nonatomic, assign) BOOL  autoRemoveWhemCellVideoOut;
+#pragma mark
 
 /**
  *  自动播放，默认不自动播放
@@ -104,13 +109,13 @@ typedef NS_ENUM(NSInteger, ZFPlayerCellVideoOutPoint) {
  */
 - (void)resetToPlayNewURL;
 
-/** 
+/**
  *  播放
  */
 - (void)play;
 
-/** 
-  * 暂停 
+/**
+ * 暂停
  */
 - (void)pause;
 
@@ -122,7 +127,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerCellVideoOutPoint) {
  *
  *  @param videoURL  视频的URL
  *  @param tableView tableView
- *  @param indexPath indexPath 
+ *  @param indexPath indexPath
  *  @param ImageViewTag ImageViewTag
  */
 - (void)setVideoURL:(NSURL *)videoURL
