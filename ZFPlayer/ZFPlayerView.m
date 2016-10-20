@@ -1790,6 +1790,16 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
         self.layer.contents = (id) image.CGImage;
     }
 }
+- (void)setPlaceholderImage:(UIImage *)placeholderImage
+{
+    _placeholderImage = placeholderImage;
+    if (placeholderImage) {
+        self.layer.contents = (id) placeholderImage.CGImage;
+    }else {
+        UIImage *image = ZFPlayerImage(@"ZFPlayer_loading_bgView");
+        self.layer.contents = (id) image.CGImage;
+    }
+}
 
 - (void)setTitle:(NSString *)title
 {
