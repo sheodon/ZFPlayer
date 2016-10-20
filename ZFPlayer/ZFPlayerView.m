@@ -376,7 +376,7 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 {
     _videoURL = videoURL;
     
-    if (!self.placeholderImageName) {
+    if (!self.placeholderImageName && !self.placeholderImage) {
         UIImage *image = ZFPlayerImage(@"ZFPlayer_loading_bgView");
         self.layer.contents = (id) image.CGImage;
     }
