@@ -692,15 +692,21 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
  */
 - (void)handleScrollOffsetWithDict:(NSDictionary*)dict
 {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
-    NSArray *visableCells = self.tableView.visibleCells;
+    //    NSArray *visableCells = self.tableView.visibleCells;
+    UIEdgeInsets inset = self.tableView.contentInset;
     
-    if ([visableCells containsObject:cell]) {
-        //在显示中
-        [self updatePlayerViewToCell];
-    }else {
+    CGSize size = self.tableView.frame.size;
+    CGRect cellFrame = [self.tableView rectForRowAtIndexPath:self.indexPath];
+    
+    CGRect tableBounds = CGRectMake(0, self.tableView.contentOffset.y + inset.top, size.width, size.height - inset.top - inset.bottom);
+    
+    if (CGRectGetMaxY(cellFrame) < tableBounds.origin.y || cellFrame.origin.y > CGRectGetMaxY(tableBounds)) {
         //在底部
         [self updatePlayerViewToBottom];
+    }
+    else {
+        //在显示中
+        [self updatePlayerViewToCell];
     }
 }
 
