@@ -35,15 +35,6 @@ typedef NS_ENUM(NSInteger, PanDirection){
     PanDirectionVerticalMoved    // 纵向移动
 };
 
-// 播放器的几种状态
-typedef NS_ENUM(NSInteger, ZFPlayerState) {
-    ZFPlayerStateFailed,     // 播放失败
-    ZFPlayerStateBuffering,  // 缓冲中
-    ZFPlayerStatePlaying,    // 播放中
-    ZFPlayerStateStopped,    // 停止播放
-    ZFPlayerStatePause       // 暂停播放
-};
-
 @interface ZFPlayerView () <UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
 /** 播放属性 */
