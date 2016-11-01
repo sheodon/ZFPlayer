@@ -367,7 +367,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 {
     _videoURL = videoURL;
     
-    if (!self.placeholderImageName) {
+    if (!self.placeholderImageName && !self.placeholderImage) {
         UIImage *image = ZFPlayerImage(@"ZFPlayer_loading_bgView");
         self.layer.contents = (id) image.CGImage;
     }
@@ -683,15 +683,21 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)handleScrollOffsetWithDict:(NSDictionary*)dict
 {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.indexPath];
-    NSArray *visableCells = self.tableView.visibleCells;
+    //    NSArray *visableCells = self.tableView.visibleCells;
+    UIEdgeInsets inset = self.tableView.contentInset;
     
-    if ([visableCells containsObject:cell]) {
-        //在显示中
-        [self updatePlayerViewToCell];
-    }else {
+    CGSize size = self.tableView.frame.size;
+    CGRect cellFrame = [self.tableView rectForRowAtIndexPath:self.indexPath];
+    
+    CGRect tableBounds = CGRectMake(0, self.tableView.contentOffset.y + inset.top, size.width, size.height - inset.top - inset.bottom);
+    
+    if (CGRectGetMaxY(cellFrame) < tableBounds.origin.y || cellFrame.origin.y > CGRectGetMaxY(tableBounds)) {
         //在底部
         [self updatePlayerViewToBottom];
+    }
+    else {
+        //在显示中
+        [self updatePlayerViewToCell];
     }
 }
 
@@ -1776,6 +1782,16 @@ typedef NS_ENUM(NSInteger, PanDirection){
     if (placeholderImageName) {
         UIImage *image = [UIImage imageNamed:self.placeholderImageName];
         self.layer.contents = (id) image.CGImage;
+    }else {
+        UIImage *image = ZFPlayerImage(@"ZFPlayer_loading_bgView");
+        self.layer.contents = (id) image.CGImage;
+    }
+}
+- (void)setPlaceholderImage:(UIImage *)placeholderImage
+{
+    _placeholderImage = placeholderImage;
+    if (placeholderImage) {
+        self.layer.contents = (id) placeholderImage.CGImage;
     }else {
         UIImage *image = ZFPlayerImage(@"ZFPlayer_loading_bgView");
         self.layer.contents = (id) image.CGImage;
